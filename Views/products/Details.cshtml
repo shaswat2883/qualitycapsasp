@@ -1,0 +1,53 @@
+﻿@model WebApplication2.Models.product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+    <script type="text/javascript">
+    function color()
+    {
+        var color = document.getElementById("color").value;
+        var quantity = document.getElementById("quantity").value;
+        var id= @Model.ID;
+        $.get('@Url.Action("AddToCart","products")', { id: id, color:color,quantity:quantity }, function (data) {
+            //Populate your "rData" element with the results
+            document.getElementById("result").innerText="Successfully Added";
+            document.getElementById("result").style.display="block";
+        });
+    }
+    </script>
+    <div class="container">
+        <h2>Product</h2>
+        <hr />
+        <div class="row">
+            <div class="col-sm-3 col-xs-12 col-md-3">
+                <img class="img-responsive" title="@Model.productName" alt="@Model.productName" src="~/uploads/@Model.imagePath" />
+            </div>
+            <div class="col-sm-3 col-xs-12 col-md-9">
+                <h4>@Model.productName</h4>
+
+                <p>@Html.DisplayFor(model => model.productContent)</p>
+                <p>
+                    <select class="form-control" name="color" id="color" onchange="color()">
+                        <option value="red">Red</option>
+                        <option value="black">Black</option>
+                        <option value="green">Green</option>
+                    </select>
+                </p>
+                <p><input class="form-control" type="number" name="quantity" id="quantity" value="1" /></p>
+                <p> <span class="price-new">$@Html.DisplayFor(model => model.price)</span></p>
+                <p><div class="alert alert-success" style="display:none;" id="result"></div></p>
+                <input class="btn-default" type="button" value="Add To Cart" onclick="color()" />
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (User.IsInRole("admin"))
+                    {
+                        @Html.ActionLink("Edit |", "Edit", new { id = Model.ID })
+                    }
+                }
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+    </div>
+

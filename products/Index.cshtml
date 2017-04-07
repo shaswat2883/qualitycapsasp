@@ -1,0 +1,39 @@
+﻿@model IEnumerable<WebApplication2.Models.product>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container product">
+
+    <h2>Latest Product</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    @{ var i = 1; }
+    <div class="row">            
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-3 col-xs-12">
+                    <a href="#"><img class="img-responsive" title="@item.productName" alt="@item.productName" src="..\uploads\@item.imagePath"></a>
+                    <h4><a href="#"> @item.productName</a></h4>
+                    <p>@item.productContent</p>
+                    <p> <span class="price-new">$@item.price</span></p>
+                    <button onclick="" type="button" class="btn btn-primary"><span>Add to Cart</span></button>
+                    <ul class="add-to-links">
+                        <li><a href="#"><i class="fa fa-heart"></i> Add to Wish List</a></li>
+                        <li><a href="#"><i class="fa fa-exchange"></i> Compare this Product</a></li>
+                    </ul>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </div>
+                i++;
+                if (i % 4 == 0)
+                {
+                    <br />               
+                }
+            }
+            }
+        </div>
+</div>

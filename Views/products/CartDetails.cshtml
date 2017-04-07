@@ -1,0 +1,46 @@
+﻿@model List<WebApplication2.Models.Cart>
+
+@{
+    ViewBag.Title = "CartDetails";
+}
+<div class="container">
+    <h2>Order Details</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Color</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ 
+                var grandTotal = 0.0;
+                for (var i = 0; i < Model.Count; i++)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => m[i].Product.productName)
+                    </td>
+                    <td>@Html.DisplayFor(m => m[i].Color)</td>
+                    <td>
+                        @Html.DisplayFor(m => m[i].Quantity, new { @type = "number" })
+                    </td>
+                    <td>@Html.DisplayFor(m => m[i].Price)</td>
+                        @{
+                        var total = Model[i].Price * Model[i].Quantity;
+                        grandTotal = grandTotal + total;
+                        <td>@total</td>
+                        }
+                </tr>
+                            }
+            <tr>
+                <td colspan="4" align="right" ><strong>GrandTotal</strong> </td>
+                <td><strong>@grandTotal</strong></td>
+            </tr>
+            }
+        </tbody>
+</table>
+</div>

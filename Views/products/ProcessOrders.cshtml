@@ -1,0 +1,25 @@
+﻿@model IEnumerable<WebApplication2.Models.PurchaseStatus>
+@{
+    ViewBag.Title = "ProcessOrders";
+}
+
+
+<div class="container">
+    <h2>ProcessOrders</h2>
+    <table class="table">
+        <tr>
+            <th>Cart ID</th>
+            <th>Shipping Status</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(item.CartId,"CartDetails",new { CartId = item.CartId })</td>
+                <td>@item.Status</td>
+                <td>@Html.ActionLink("Shipped","UpdateStatus",new { CartId = item.CartId})</td>
+            </tr>
+        }
+        
+    </table>
+</div>
+

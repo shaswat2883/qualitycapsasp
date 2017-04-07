@@ -1,0 +1,56 @@
+﻿@model List<WebApplication2.Models.Cart>
+
+@{
+    ViewBag.Title = "MyCart";
+}
+
+<div class="container">
+    <h2>MyCart</h2>
+   @using (Html.BeginForm("MyCart", "products", FormMethod.Post))
+   {
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Color</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                //var grandTotal = 0.0;
+                for (var i = 0; i < Model.Count; i++)
+                {
+                <tr>
+                    <td>
+                       @Html.DisplayFor(m => m[i].Product.productName)
+                    </td>
+                    <td>@Html.DisplayFor(m => m[i].Color)</td>
+                    <td>
+                        @Html.TextBoxFor(m => m[i].Quantity, new { @type = "number" })
+                    </td>
+                    
+                   
+                    
+                  </tr>
+                
+                @Html.HiddenFor(m => m[i].Color)
+                @Html.HiddenFor(m => m[i].Quantity)
+                @Html.HiddenFor(m => m[i].Date)
+                @Html.HiddenFor(m => m[i].Price)
+                @Html.HiddenFor(m => m[i].ProductId)
+                @Html.HiddenFor(m => m[i].Product)
+
+                            }
+                        }
+            
+            <tr>
+                <td>
+                    <input type="submit" value="checkout" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+   }
+</div>

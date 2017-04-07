@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="icon" href="favicon.png" type="image/x-icon" />
+    <!--bootstrap css-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!--global css-->
+    <link href="~/css/global.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <nav class="header_top">
+        <div class="container">
+            <div class="row">
+                <ul class="links">
+                    <li><i class="fa fa-phone"></i> +61 1234 567 890</li>
+                    <li><a href="mailto:info@xyz.com"><i class="fa fa-envelope"></i> info@xyz.com</a></li>
+                </ul>
+                <div class="pull-right">
+                    <ul class="links">
+                        
+                        @Html.Partial("_LoginPartial")
+                        <li><i class="fa fa-briefcase"></i> @Html.ActionLink(" Cart","GetCart")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-md-6"> <a href="#" class="logo"><img src="~/images/logoCap.gif" /></a></div>
+                <div class="col-sm-6 col-md-6">
+                    
+                        @using (Html.BeginForm("Index", "products", null, FormMethod.Get))
+                        {
+                            <div class="input-group" style="padding-top:92px;">
+                                @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class= "form-control", @placeholder="search...", @style = "margin-right: 2px;float: right;" })
+                                <span class="input-group-btn">
+                                    <input class="btn btn-default" value="Search" type="submit">
+                                </span>
+                            </div>
+                        }
+                            
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "products")</li>
+                        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Men","GetByCategory",new { category="men"})</li>
+                            <li>@Html.ActionLink("Women", "GetByCategory", new { category = "women" })</li>
+                        </ul>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (User.IsInRole("admin"))
+                            {
+                                <li>
+                                    @Html.ActionLink("Orders", "ProcessOrders")
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Users", "UserList","Account")
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    @Html.ActionLink("My Orders","ListOrders")
+                                </li>
+                            }
+                        }
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    
+    
+        @RenderBody()
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                    <h5>Contact Details</h5>
+                    <ul>
+                        <li class="address"><i class="fa fa-map-marker"></i> Central Square, 22 Hoi Wing Road, NZ</li>
+                        <li class="mobile"><i class="fa fa-phone"></i> +91 1234 567 890</li>
+                        <li class="email"><i class="fa fa-envelope"></i> Send email via our <a href="#">Contact Us</a> </li>
+                    </ul>
+                </div>
+                <div class="column col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                    <h5>Information</h5>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Delivery Information</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms &amp; Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                    <h5>Customer Service</h5>
+                    <ul>
+                        <li><a href="contact-us.html">Contact Us</a></li>
+                        <li><a href="returns.html">Returns</a></li>
+                        <li><a href="sitemap.html">Site Map</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                    <h5>Extras</h5>
+                    <ul>
+                        <li><a href="#">Brands</a></li>
+                        <li><a href="#">Gift Vouchers</a></li>
+                        <li><a href="#">Affiliates</a></li>
+                        <li><a href="#">Specials</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <h5>Newsletter</h5>
+                    <div class="form-group">
+                        <label for="subscribe" class="control-label">Sign up to receive latest news and updates.</label>
+                        <input type="email" class="form-control" name="email" placeholder="Email address" required id="signup">
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Subscribe">
+                </div>
+            </div>
+            <br>
+            <p>This is a CMS block. You can insert any content (HTML, Text, Images) Here. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+        </div>
+    </footer>
+    
+    <!--Ie Js-->
+    <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+    <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+    <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" async : true></script>
+        <![endif]-->
+    <script src="https://use.fontawesome.com/6fe62b4bf4.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" async true></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://raw.githubusercontent.com/scottjehl/Respond/master/dest/respond.min.js" async true></script> 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
